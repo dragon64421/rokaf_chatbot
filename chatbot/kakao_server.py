@@ -291,13 +291,13 @@ def admin(mode, rcvmsg, kakaoid): #관리자명령어
             clscount = [0, 0, 0, 0]
             sqdcount = [0, 0, 0, 0, 0, 0, 0, 0]
             while survey_sheet.cell(row=index, column=1).value != None:
-                if survey_sheet.cell(row=index, column=2).value == '69':
-                    clscount[0] += 1
-                if survey_sheet.cell(row=index, column=2).value == '70':
-                    clscount[1] += 1
                 if survey_sheet.cell(row=index, column=2).value == '71':
-                    clscount[2] += 1
+                    clscount[0] += 1
                 if survey_sheet.cell(row=index, column=2).value == '72':
+                    clscount[1] += 1
+                if survey_sheet.cell(row=index, column=2).value == '73':
+                    clscount[2] += 1
+                if survey_sheet.cell(row=index, column=2).value == '74':
                     clscount[3] += 1
                 if survey_sheet.cell(row=index, column=3).value == '1':
                     sqdcount[0] += 1
@@ -320,7 +320,7 @@ def admin(mode, rcvmsg, kakaoid): #관리자명령어
             msg += '\n총 신청수: ' + str(index-1)
             for i in range(0, 4):
                 if clscount[i] != 0:
-                    msg += '\n' + str(69 + i) + '기: ' + str(clscount[i]) + '개'
+                    msg += '\n' + str(71 + i) + '기: ' + str(clscount[i]) + '개'
             for i in range(0, 8):
                 if sqdcount[i] != 0:
                     msg += '\n' + str(i + 1) + '중대: ' + str(sqdcount[i]) + '개'
@@ -475,7 +475,7 @@ def admin(mode, rcvmsg, kakaoid): #관리자명령어
             surveylist_sheet.cell(row=check_survey, column=5, value=0)
             surveylist.save('surveylist.xlsx')
             return '신청마감이 취소되었습니다'
-        elif mode == 13:  # 투표생성
+        elif mode == 13:  # 투표생성, 사용하지 않는 기능임
             if len(rcvmsg.split('/')[0].split('.')) == 3 and len(rcvmsg.split('/')) == 4 and len(
                     rcvmsg.split('/')[1].split('.')) == int(rcvmsg.split('/')[0].split('.')[2]):
                 newvotename = rcvmsg.split('.')[1]
