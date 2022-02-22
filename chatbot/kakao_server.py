@@ -915,12 +915,12 @@ def message():
             if len(msgmsglist) >= 2:
                 msglist = msgmsglist[1:]
         elif status == 2: #투표목록에서 투표를 선택함
-            msgmsglist = vote(1, rcvmsg, kakaoid)
+            msgmsglist = []#vote(1, rcvmsg, kakaoid)
             msg = msgmsglist[0]
             if len(msgmsglist) >= 2:
                 msglist = msgmsglist[1:]
         elif status.startswith('!투표'):
-            msgmsglist = vote(status, rcvmsg, kakaoid)
+            msgmsglist = []#vote(status, rcvmsg, kakaoid)
             msg = msgmsglist[0]
             if len(msgmsglist) >= 2:
                 msglist = msgmsglist[1:]
