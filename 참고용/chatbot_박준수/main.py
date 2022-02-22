@@ -7,7 +7,7 @@ from http_server import add_file
 
 import plivo
 try:
-    client = plivo.RestClient(auth_id='MAOGM5NGE1ODMZN2FHOW',auth_token='MTU1NDM5ZDNkN2NhODA0ZTIzODM0OWY3ODM4YmQy')
+    client = plivo.RestClient(auth_id='',auth_token='')
 except:
     print(1)
 

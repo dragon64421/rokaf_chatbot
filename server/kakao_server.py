@@ -193,8 +193,8 @@ def admin(mode, rcvmsg, kakaoid): #관리자명령어
                 return '존재하지 않는 신청이름입니다'
             if kakaoid != surveylist_sheet.cell(row=check_name, column=3).value and kakaoid != surveylist_sheet.cell(row=check_name, column=6).value and kakaoid != surveylist_sheet.cell(row=check_name, column=7).value and kakaoid != surveylist_sheet.cell(row=check_name, column=8).value and kakaoid != surveylist_sheet.cell(row=check_name, column=9).value and kakaoid != surveylist_sheet.cell(row=check_name, column=10).value:
                 return '해당 신청내용을 열람할 권한이 없습니다'
-            email_user = 'afakakaobot@gmail.com'
-            email_password = 'Qq28095774!'
+            email_user = ''#메일주소입력
+            email_password = ''#비밀번호 입력
             try:
                 email_send = rcvmsg.split('.')[2] + '.' + rcvmsg.split('.')[3] + '.' + rcvmsg.split('.')[4]
             except:
