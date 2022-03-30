@@ -193,8 +193,8 @@ def admin(mode, rcvmsg, kakaoid): #관리자명령어
                 return '존재하지 않는 신청이름입니다'
             if kakaoid != surveylist_sheet.cell(row=check_name, column=3).value and kakaoid != surveylist_sheet.cell(row=check_name, column=6).value and kakaoid != surveylist_sheet.cell(row=check_name, column=7).value and kakaoid != surveylist_sheet.cell(row=check_name, column=8).value and kakaoid != surveylist_sheet.cell(row=check_name, column=9).value and kakaoid != surveylist_sheet.cell(row=check_name, column=10).value:
                 return '해당 신청내용을 열람할 권한이 없습니다'
-            email_user = ''#메일주소입력
-            email_password = ''#비밀번호 입력
+            email_user = 'afakakaobot@gmail.com'
+            email_password = 'Qq28095774!'
             try:
                 email_send = rcvmsg.split('.')[2] + '.' + rcvmsg.split('.')[3] + '.' + rcvmsg.split('.')[4]
             except:
@@ -291,13 +291,13 @@ def admin(mode, rcvmsg, kakaoid): #관리자명령어
             clscount = [0, 0, 0, 0]
             sqdcount = [0, 0, 0, 0, 0, 0, 0, 0]
             while survey_sheet.cell(row=index, column=1).value != None:
-                if survey_sheet.cell(row=index, column=2).value == '71':
+                if survey_sheet.cell(row=index, column=2).value == '69':
                     clscount[0] += 1
-                if survey_sheet.cell(row=index, column=2).value == '72':
+                if survey_sheet.cell(row=index, column=2).value == '70':
                     clscount[1] += 1
-                if survey_sheet.cell(row=index, column=2).value == '73':
+                if survey_sheet.cell(row=index, column=2).value == '71':
                     clscount[2] += 1
-                if survey_sheet.cell(row=index, column=2).value == '74':
+                if survey_sheet.cell(row=index, column=2).value == '72':
                     clscount[3] += 1
                 if survey_sheet.cell(row=index, column=3).value == '1':
                     sqdcount[0] += 1
@@ -320,7 +320,7 @@ def admin(mode, rcvmsg, kakaoid): #관리자명령어
             msg += '\n총 신청수: ' + str(index-1)
             for i in range(0, 4):
                 if clscount[i] != 0:
-                    msg += '\n' + str(71 + i) + '기: ' + str(clscount[i]) + '개'
+                    msg += '\n' + str(69 + i) + '기: ' + str(clscount[i]) + '개'
             for i in range(0, 8):
                 if sqdcount[i] != 0:
                     msg += '\n' + str(i + 1) + '중대: ' + str(sqdcount[i]) + '개'
@@ -402,7 +402,7 @@ def admin(mode, rcvmsg, kakaoid): #관리자명령어
             pw_list_sheet.cell(row=index, column=1, value=filename)
             pw_list_sheet.cell(row=index, column=2, value=pw)
             pw_list.save('pw_list.xlsx')
-            msg = '다운로드코드가 발급되었습니다.\nhttp://15.164.99.172에 접속하여\n'+str(pw)+'\n를 입력하면 다운로드가 시작됩니다.'
+            msg = '다운로드코드가 발급되었습니다.\nhttp://13.209.98.219에 접속하여\n'+str(pw)+'\n를 입력하면 다운로드가 시작됩니다.'
             return msg
         elif mode == 1: #신청생성
             if len(rcvmsg.split('/')[0].split('.')) == 3 and len(rcvmsg.split('/')) == 2 and len(
@@ -475,7 +475,7 @@ def admin(mode, rcvmsg, kakaoid): #관리자명령어
             surveylist_sheet.cell(row=check_survey, column=5, value=0)
             surveylist.save('surveylist.xlsx')
             return '신청마감이 취소되었습니다'
-        elif mode == 13:  # 투표생성, 사용하지 않는 기능임
+        elif mode == 13:  # 투표생성
             if len(rcvmsg.split('/')[0].split('.')) == 3 and len(rcvmsg.split('/')) == 4 and len(
                     rcvmsg.split('/')[1].split('.')) == int(rcvmsg.split('/')[0].split('.')[2]):
                 newvotename = rcvmsg.split('.')[1]
@@ -823,12 +823,35 @@ def easysurvey(mode, rcvmsg, kakaoid):
 
 @app.route('/', methods=['POST'])
 def message():
+    dataSend = {   #중간에 에러나면 출력할 메시지
+        "version": "2.0",
+        "template": {
+            "outputs": [
+                {
+                    "simpleText": {
+                        "text": '오류발생'
+                    }
+                }
+            ]
+        }}
     dataReceive = request.get_json() #json으로 메시지 수신
     #print(dataReceive)
     rcvmsg = dataReceive["userRequest"]["utterance"] #수신 메시지 추출
     #print(rcvmsg)
     kakaoid = dataReceive["userRequest"]["user"]['id'] #카카오톡 id 추출
-    signincheck = signin(kakaoid, rcvmsg)
+    try:
+        signincheck = signin(kakaoid, rcvmsg)
+    except:
+        name_id = openpyxl.load_workbook("[back_up]name_id.xlsx")
+        name_id.save('name_id.xlsx')
+        name_id.close()
+        try:
+            signincheck = signin(kakaoid, rcvmsg)
+        except:
+            return jsonify(dataSend)
+    name_id = openpyxl.load_workbook("name_id.xlsx")
+    name_id.save('[back_up]name_id.xlsx')
+    name_id.close()
     msglist = None
     if signincheck == 2:
         msg = '등록.기수.중대.교번.이름\n으로 먼저 등록을 해주세요'
@@ -914,13 +937,13 @@ def message():
             msg = msgmsglist[0]
             if len(msgmsglist) >= 2:
                 msglist = msgmsglist[1:]
-        elif status == 2: #투표목록에서 투표를 선택함
-            msgmsglist = []#vote(1, rcvmsg, kakaoid)
+        elif status == 2: #투표목록에서 투표를 선택함, 사용하지 않음
+            msgmsglist = [] #vote(1, rcvmsg, kakaoid)
             msg = msgmsglist[0]
             if len(msgmsglist) >= 2:
                 msglist = msgmsglist[1:]
-        elif status.startswith('!투표'):
-            msgmsglist = []#vote(status, rcvmsg, kakaoid)
+        elif status.startswith('!투표'): # 사용하지않음
+            msgmsglist = [] #vote(status, rcvmsg, kakaoid)
             msg = msgmsglist[0]
             if len(msgmsglist) >= 2:
                 msglist = msgmsglist[1:]
