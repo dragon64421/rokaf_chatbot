@@ -1,7 +1,7 @@
 행정이 관리자를 위한 설명서
 
-Version 1.0
-2022.2.22
+Version 1.1
+2022.3.30
 김영준
 01051286093
 
@@ -71,7 +71,7 @@ Version 1.0
 	1. 카카오 디벨로퍼 신청
 	https://business.kakao.com/dashboard/
 	여기 접속해보고 만약 무슨 신청이 필요하다고 하면 하면됨, 하루이틀 기다리면 권한을 줌
-	2. 카카오태널 생성
+	2. 카카오채널 생성
 	폰에서 카카오채널 앱을 깔고 채널을 개설해야함 (기존의 채널에 관리자로 추가해 줄테니 이거 할때 나한테 연락하셈)
 	3. 카카오디벨로퍼에서 챗봇 생성 (기존에 만들어둔 챗봇 권한을 줄 수 있으니 이거할때 나한테 연락하셈)
 	4. (만약 챗봇을 새로 만든다면) 챗봇을 생성했으면, 시나리오 로 가서 기본으로 있는 것들 모두 삭제
@@ -83,22 +83,30 @@ Version 1.0
 
 3. 챗봇 실행법
 준비과정을 모두 마쳤으면, 이제 서버에서 파일을 실행하면됨. 실행해야할 파일은 두가지
-
->kakao_server.py
-SSH를 통해서 서버에 접속하고
-screen 을 입력
-경고창이 뜨면 엔터로 확인
-cd server 로 이동
+sudo screen 을 입력해서 스크린 열기(반드시 sudo 붙여야함)
+cd [파일이름] 을 입력해서 서버파일로 이동
+ctrl+a 누르고 이어서 S(shfit+s) 을 두번 입력해서 창 3개 만들기
+0번 창에서
 python3 kakao_server.py 로 서버 실행
-스마트폰으로 챗봇에 메세지를 보내보고 작동하는지 확인
-crtl + a + d 로 screen 나가기(screen을 나가도 코드는 계속 돌아감)
+ctrl+a 누르고 이어서 tab 을 입력해서 창 이동
+ctrl+a 누르고 이어서 c 을 입력해서 창 열기
+python3 http_server.py	
+ctrl+a 누르고 이어서 tab 을 입력해서 창 이동
+ctrl+a 누르고 이어서 c 을 입력해서 창 열기
+새창에서 파일 모니터링 등등 작업 가능
+다 끝나면
+ctrl+a 누르고 이어서 d 을 입력해서 screen 나오기
 
->http_server.py
-http_server.py는 sudo 명령어를 통해서 실행시켜줘야만 에러없이 작동함
-sudo screen 으로 새로운 screen을 열어주고
-cd server
-sudo python3 http_server.py	
-crtl + a + d 로 screen 나가기(screen을 나가도 코드는 계속 돌아감)
+서버 점검시
+서버 접속후
+sudo screen -r
+ctrl+a 누르고 이어서 S(shfit+s) 을 두번 입력해서 창 3개 만들기
+맨위에서 ctrl+a 누르고 이어서 0
+ctrl+a 누르고 이어서 tab 을 입력해서 중간 창으로 이동
+ctrl+a 누르고 이어서 1
+ctrl+a 누르고 이어서 tab 을 입력해서 맨 아래 창으로 이동
+ctrl+a 누르고 이어서 2
+이렇게하면 위에서부터 kakao_server.py http_server.py 모니터링창
 
 ##screen 종료방법
 screen에서 나온 상태에서
